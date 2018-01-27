@@ -21,6 +21,7 @@ func ReadJSON(r *http.Request, v interface{}) error {
 	if err != nil {
 		return err
 	}
+	defer r.Body.Close()
 
 	if err := json.Unmarshal(data, v); err != nil {
 		return ErrNotJSON
