@@ -42,15 +42,20 @@ func WriteJSON(w http.ResponseWriter, v interface{}) {
 	fmt.Fprintf(w, string(data))
 }
 
-// WriteJSONError writes a jsonized error out to the client. This will be
+// WriteJSONErrors writes a jsonized error out to the client. This will be
 // presented to the client as a json blob with the error code as well as
 // a list of errors. This is syntactic sugar on top of WriteJSON. The same
 // semantics apply.
-func WriteJSONError(w http.ResponseWriter, code int, errors []string) {
+func WriteJSONErrors(w http.ResponseWriter, code int, errors []string) {
 	out := map[string]interface{}{
 		"code": code,
 		"errors": errors,
 	}
 	w.WriteHeader(code)
 	WriteJSON(w, out)
+}
+
+// WriteJSONError is literally syntactic sugar to write just one error.
+func WriteJSONError(w http.ResponseWriter, code int, err string) {
+	WriteJSONErrors(w, code, []string{err})
 }
