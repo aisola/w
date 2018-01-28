@@ -33,13 +33,14 @@ func ReadJSON(r *http.Request, v interface{}) error {
 // WriteJSON writes a jsonizable object out the the response writer. If the
 // object is not json serializable, then WriteJSON will panic because that
 // is a programming error.
-func WriteJSON(w http.ResponseWriter, v interface{}) {
+func WriteJSON(w http.ResponseWriter, code int, v interface{}) {
 	data, err := json.Marshal(v)
 	if err != nil {
 		panic("error jsonizing your data")
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
 	fmt.Fprintf(w, string(data))
 }
 
@@ -52,8 +53,7 @@ func WriteJSONErrors(w http.ResponseWriter, code int, errors []string) {
 		"code": code,
 		"errors": errors,
 	}
-	w.WriteHeader(code)
-	WriteJSON(w, out)
+	WriteJSON(w, code, out)
 }
 
 // WriteJSONError is literally syntactic sugar to write just one error.
