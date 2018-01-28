@@ -39,7 +39,7 @@ func WriteJSON(w http.ResponseWriter, v interface{}) {
 		panic("error jsonizing your data")
 	}
 
-	w.Headers().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, string(data))
 }
 
