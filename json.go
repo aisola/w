@@ -1,4 +1,4 @@
-package w
+package web
 
 import (
 	"encoding/json"

@@ -1,5 +1,5 @@
-W
-=
+web
+===
 
 A small set of things that I keep writing too often in go web things.
 
